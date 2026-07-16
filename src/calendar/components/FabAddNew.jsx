@@ -3,9 +3,10 @@ import { useUiStore } from "../../hooks/useUiStore";
 
 export const FabAddNew = () => {
   const { openDateModal } = useUiStore();
-  const { startCreatingEvent } = useCalendarStore();
+  const { setActiveEvent } = useCalendarStore();
   const handleClick = () => {
     console.log("FAB clicked");
+    setActiveEvent();
     openDateModal();
   };
 

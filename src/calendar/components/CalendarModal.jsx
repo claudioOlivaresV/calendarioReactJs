@@ -26,7 +26,7 @@ Modal.setAppElement("#root");
 export const CalendarModal = () => {
   const { isDateModalOpen, closeDateModal } = useUiStore();
 
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavignEvent } = useCalendarStore();
   const [formValues, setFormValues] = useState({
     title: "Title",
     notes: "Notes",
@@ -64,7 +64,7 @@ export const CalendarModal = () => {
     }
   }, [activeEvent]);
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     setFormSubmitted(true);
     const difference = differenceInSeconds(formValues.end, formValues.start);
@@ -75,7 +75,9 @@ export const CalendarModal = () => {
       Swal.fire("Fechas incorrectas", "Revisar las fechas ingresadas", "error");
       return;
     }
-
+    await startSavignEvent(formValues);
+    closeDateModal();
+    setFormSubmitted(false);
     console.log("Formulario enviado", formValues);
   };
   return (

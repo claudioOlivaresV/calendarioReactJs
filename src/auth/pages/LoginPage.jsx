@@ -1,7 +1,47 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "../../hooks/useForm";
+
+const loginFormFields = {
+  loginEmail: "",
+  loginPassword: "",
+};
+
+const registerFormFields = {
+  registerName: "",
+  registerEmail: "",
+  registerPassword: "",
+  registerPassword2: "",
+};
 
 export const LoginPage = () => {
+  const {
+    loginEmail,
+    loginPassword,
+    onInputChange: onLoginInputChange,
+  } = useForm(loginFormFields);
+
+  const {
+    registerName,
+    registerEmail,
+    registerPassword,
+    registerPassword2,
+    onInputChange: onRegisterInputChange,
+  } = useForm(registerFormFields);
+
+  const loginSubmit = (event) => {
+    event.preventDefault();
+    console.log({ loginEmail, loginPassword });
+  };
+  const registerSubmit = (event) => {
+    event.preventDefault();
+    console.log({
+      registerName,
+      registerEmail,
+      registerPassword,
+      registerPassword2,
+    });
+  };
   return (
     <div
       className="min-vh-100 d-flex align-items-center justify-content-center p-3"
@@ -34,6 +74,9 @@ export const LoginPage = () => {
                     className="form-control form-control-lg"
                     id="loginEmail"
                     placeholder="tu@email.com"
+                    name="loginEmail"
+                    value={loginEmail}
+                    onChange={onLoginInputChange}
                     required
                   />
                 </div>
@@ -50,27 +93,17 @@ export const LoginPage = () => {
                     id="loginPassword"
                     placeholder="••••••••"
                     required
+                    name="loginPassword"
+                    value={loginPassword}
+                    onChange={onLoginInputChange}
                   />
                 </div>
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  <div className="form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="rememberMe"
-                    />
-                    <label className="form-check-label" htmlFor="rememberMe">
-                      Recordarme
-                    </label>
-                  </div>
-                  <a href="#" className="text-decoration-none small">
-                    ¿Olvidaste tu contraseña?
-                  </a>
-                </div>
+
                 <button
                   type="submit"
                   className="btn btn-primary w-100 btn-lg"
                   style={{ backgroundColor: "#667eea", borderColor: "#667eea" }}
+                  onClick={loginSubmit}
                 >
                   Entrar
                 </button>
@@ -104,6 +137,9 @@ export const LoginPage = () => {
                     id="registerName"
                     placeholder="Juan Pérez"
                     required
+                    name="registerName"
+                    value={registerName}
+                    onChange={onRegisterInputChange}
                   />
                 </div>
                 <div className="mb-3">
@@ -119,6 +155,9 @@ export const LoginPage = () => {
                     id="registerEmail"
                     placeholder="tu@email.com"
                     required
+                    name="registerEmail"
+                    value={registerEmail}
+                    onChange={onRegisterInputChange}
                   />
                 </div>
                 <div className="mb-3">
@@ -134,6 +173,9 @@ export const LoginPage = () => {
                     id="registerPassword"
                     placeholder="••••••••"
                     required
+                    name="registerPassword"
+                    value={registerPassword}
+                    onChange={onRegisterInputChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -148,6 +190,9 @@ export const LoginPage = () => {
                     className="form-control form-control-lg"
                     id="registerConfirm"
                     placeholder="••••••••"
+                    name="registerPassword2"
+                    value={registerPassword2}
+                    onChange={onRegisterInputChange}
                     required
                   />
                 </div>
@@ -155,6 +200,7 @@ export const LoginPage = () => {
                   type="submit"
                   className="btn btn-light w-100 btn-lg fw-semibold"
                   style={{ color: "#764ba2" }}
+                  onClick={registerSubmit}
                 >
                   Registrarse
                 </button>

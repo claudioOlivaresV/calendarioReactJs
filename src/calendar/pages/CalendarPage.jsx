@@ -3,7 +3,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { NavBar } from "../components/NavBar";
 import { localizer, getMessages } from "../../helpers";
 import { CalendarEvent } from "../components/CalendarEvent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarModal } from "../components/CalendarModal";
 import { useUiStore } from "../../hooks/useUiStore";
 import { useCalendarStore } from "../../hooks/useCalendarStore";
@@ -16,7 +16,7 @@ export const CalendarPage = () => {
     localStorage.getItem("calendar-view") || Views.WEEK,
   );
 
-  const { events, setActiveEvent } = useCalendarStore();
+  const { events, setActiveEvent, starLoadingEvents } = useCalendarStore();
 
   const eventStyleGetter = (event, start, end, isSelected) => {
     console.log({ event, start, end, isSelected });
@@ -40,6 +40,10 @@ export const CalendarPage = () => {
     console.log("Nueva vista:", newView);
     setView(newView);
   };
+
+  useEffect(() => {
+    starLoadingEvents();
+  }, []);
 
   return (
     <>

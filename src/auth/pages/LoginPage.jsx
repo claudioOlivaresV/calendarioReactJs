@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
+import { useAuthStore } from "../../hooks/useAuthStore";
+import Swal from "sweetalert2";
 
 const loginFormFields = {
   loginEmail: "",
@@ -15,6 +17,7 @@ const registerFormFields = {
 };
 
 export const LoginPage = () => {
+  const { startLogin, startRegister } = useAuthStore();
   const {
     loginEmail,
     loginPassword,
@@ -32,14 +35,24 @@ export const LoginPage = () => {
   const loginSubmit = (event) => {
     event.preventDefault();
     console.log({ loginEmail, loginPassword });
+    startLogin({ email: loginEmail, password: loginPassword });
   };
   const registerSubmit = (event) => {
     event.preventDefault();
+    if (registerPassword !== registerPassword2) {
+      Swal.fire("Error registro", "Contraseñas no son iguales", "error");
+      return;
+    }
     console.log({
       registerName,
       registerEmail,
       registerPassword,
       registerPassword2,
+    });
+    startRegister({
+      name: registerName,
+      email: registerEmail,
+      password: registerPassword,
     });
   };
   return (

@@ -1,6 +1,8 @@
 import React from "react";
+import { useAuthStore } from "../../hooks/useAuthStore";
 
 export const NavBar = () => {
+  const { starLogout, user } = useAuthStore();
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm border-bottom px-4 py-3">
       <div className="container-fluid">
@@ -29,11 +31,14 @@ export const NavBar = () => {
             <div className="ms-3">
               <small className="text-muted d-block">Bienvenido</small>
 
-              <span className="fw-semibold">Claudio Olivares</span>
+              <span className="fw-semibold">{user.name}</span>
             </div>
           </div>
 
-          <button className="btn btn-light border rounded-pill px-4">
+          <button
+            className="btn btn-light border rounded-pill px-4"
+            onClick={starLogout}
+          >
             <i className="fas fa-right-from-bracket me-2 text-danger"></i>
             Salir
           </button>
